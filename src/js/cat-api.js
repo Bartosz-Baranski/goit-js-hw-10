@@ -1,5 +1,5 @@
-import { showLoader, hideLoader } from './loaders';
-import { errorMsg } from './error';
+import { showLoader, hideLoader } from './loaders.js';
+import { errorMsg } from './error.js';
 
 const catBreeds =
   'https://api.thecatapi.com/v1/breeds?api_key=live_Nw845iZS2A8lXgivT8RyWWvksHvJxDQlAMZ3qV7yUJvpqnHbGzuq2nL2AJ2vyjn7';
@@ -7,26 +7,13 @@ const catBreeds =
 const catFilter = document.querySelector('.breed-select');
 const chosenCatInfo = 'https://api.thecatapi.com/v1/images/search';
 const catCard = document.querySelector('.cat-info');
-const loading = document.querySelector('.loader');
-const errorInfo = document.querySelector('.error');
-
-function hideAlert(loader) {
-  loader.classList.add('visible');
-}
-
-function showAlert(loader) {
-  loader.classList.remove('visible');
-}
-
-hideAlert(loading);
-hideAlert(errorInfo);
 
 function pingUrl(url) {
   return new Promise((resolve, reject) => {
     fetch(url)
       .then(response => {
         if (!response.ok) {
-          reject(errorInfo);
+          reject(errorMsg);
         } else {
           return response.json();
         }
@@ -34,7 +21,7 @@ function pingUrl(url) {
       .then(data => {
         resolve(data);
       })
-      .catch(err => reject(err));
+      .catch(err => reject(errorMsg));
   });
 }
 
@@ -56,7 +43,7 @@ function fetchCatByBreed(breedId) {
       catCard.insertAdjacentHTML('afterbegin', pictureLink);
     })
     .catch(err => {
-      showAlert(errorInfo);
+      errorMsg;
     });
   const catInfo = `https://api.thecatapi.com/v1/breeds/${breedId}`;
   pingUrl(catInfo)
@@ -65,18 +52,18 @@ function fetchCatByBreed(breedId) {
       catCard.insertAdjacentHTML('beforeend', catDesciption);
     })
     .catch(err => {
-      showAlert(errorInfo);
+      errorMsg();
     });
 }
 
 function handleFilterForm(e) {
-  hideAlert(errorInfo);
-  showAlert(loading);
+  // hideLoader();
+  showLoader();
   catCard.innerHTML = '';
   fetchCatByBreed(e.target.value);
   setTimeout(function () {
-    hideAlert(loading);
+    hideLoader();
   }, 500);
 }
-
+hideLoader();
 catFilter.addEventListener('change', handleFilterForm);

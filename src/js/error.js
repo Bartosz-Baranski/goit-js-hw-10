@@ -1,7 +1,5 @@
-// const errorInfo = document.querySelector('.error');
+import Notiflix from 'notiflix';
 
-export function errorMsg() {
-  Notiflix.Notify.warning(
-    'Oops! Something went wrong! Try reloading the page!'
-  );
-}
+export const errorMsg = Notiflix.Notify.warning(
+  'Oops! Something went wrong! Try reloading the page!'
+);
