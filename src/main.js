@@ -3,6 +3,9 @@ import {
   fetchBreeds,
   fetchCatByBreed,
   handleFilterForm,
-} from './js/cat-api';
+} from './js/cat-api.js';
 
+// pingUrl();
 fetchBreeds();
+// fetchCatByBreed();
+// handleFilterForm();
